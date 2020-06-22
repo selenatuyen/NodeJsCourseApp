@@ -11,7 +11,7 @@ router.get('/add-product', (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
 
     //using pug
-    res.render('add-product', {pageTitle: 'Add Product'});
+    res.render('add-product', {pageTitle: 'Add Product', path: '/admin/add-product', activeAddProduct: true, productCSS: true});
 });
 
 router.post('/add-product', (req, res, next) => { //app.post only works for post requests, use works with all http methods
