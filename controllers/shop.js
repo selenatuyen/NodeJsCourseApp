@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
     // console.log(adminData.products);
@@ -15,6 +16,17 @@ exports.getProducts = (req, res, next) => {
             activeShop: true
         });
     });
+};
+
+exports.getProduct = (req, res, next) => {
+    const productId = req.params.productId;
+    Product.findById(productId, product => {
+        res.render('shop/product-detail', {
+            product: product,
+            pageTitle: product.title,
+            path: '/products'
+        });
+    })
 };
 
 exports.getIndex = (req, res, next) => {
@@ -35,6 +47,14 @@ exports.getCart = (req, res, next) =>{
         pageTitle: 'Your Cart'
     });
 };
+
+exports.postCart = (req, res, next) => {
+    const productId = req.body.productId;
+    Product.findById(productId, product => {
+        Cart.addProduct(productId, product.price)
+    });
+    res.redirect('/cart');
+}
 
 exports.getOrders = (req, res, next) =>{
     res.render('shop/orders', {
