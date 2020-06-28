@@ -4,7 +4,7 @@ exports.getAddProduct = (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
 
     //using templates
-    res.render('add-product', {
+    res.render('admin/add-product', {
         pageTitle: 'Add Product', 
         path: '/admin/add-product', 
         activeAddProduct: true, 
@@ -15,22 +15,21 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => { //app.post only works for post requests, use works with all http methods
     // products.push({title: req.body.title});
-    const product = new Product(req.body.title);
+    const title = req.body.title;
+    const imageUrl = req.body.imageUrl;
+    const description = req.body.description;
+    const price = req.body.price;
+    const product = new Product(title, imageUrl, description, price);
     product.save();
     res.redirect('/');
 }
 
 exports.getProducts = (req, res, next) => {
-    // console.log(adminData.products);
-    // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-
-    //using templates
-    // const products = adminData.products;
     Product.fetchAll(products => {
-        res.render('shop', {
+        res.render('admin/products', {
             prods: products, 
-            pageTitle: 'Shop', 
-            path: '/', 
+            pageTitle: 'Admin Products', 
+            path: 'admin/products', 
             hasProducts: products.length > 0, 
             activeShop: true
         });
