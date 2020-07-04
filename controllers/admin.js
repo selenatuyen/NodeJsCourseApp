@@ -4,10 +4,11 @@ exports.getAddProduct = (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
 
     //using templates
-    res.render('admin/add-product', {
+    res.render('admin/edit-product', {
         pageTitle: 'Add Product', 
         path: '/admin/add-product', 
         activeAddProduct: true, 
+        editing: false,
         formsCSS: true,
         productCSS: true
     });
@@ -22,6 +23,34 @@ exports.postAddProduct = (req, res, next) => { //app.post only works for post re
     const product = new Product(title, imageUrl, description, price);
     product.save();
     res.redirect('/');
+}
+
+exports.getEditProduct = (req, res, next) => {
+    // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+
+    //using templates
+
+    const editMode = req.query.edit;
+    if(!editMode){
+        res.redirect('/');
+    }
+
+    const prodId = req.params.productId;
+
+    Product.findById(prodId, product => {
+        if(!product){
+            return res.redirect('/');
+        }
+        res.render('admin/edit-product', {
+            pageTitle: 'Edit Product', 
+            path: '/admin/edit-product', 
+            activeAddProduct: true, 
+            editing: editMode,
+            product: product,
+            formsCSS: true,
+            productCSS: true
+        });
+    });
 }
 
 exports.getProducts = (req, res, next) => {
