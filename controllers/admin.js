@@ -21,7 +21,11 @@ exports.postAddProduct = (req, res, next) => { //app.post only works for post re
     const description = req.body.description;
     const price = req.body.price;
     const product = new Product(null, title, imageUrl, description, price);
-    product.save();
+    product.save()
+    .then(() => {
+        res.redirect('/');
+    })
+    .catch(err => console.log(err));
     res.redirect('/');
 }
 
