@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 // const expressHandlebars = require('express-handlebars');
 
 const errorController = require('./controllers/error');
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 const app = express();
 
@@ -30,6 +30,13 @@ app.use('/admin', adminRoutes); // '/admin' is an added filter to go to /admin/a
 app.use(shopRoutes);
 
 app.use(errorController.get404);
+
+sequelize.sync().then(result => {
+    // console.log(result);
+})
+.catch(err => {
+    console.log(err);
+}); //syncs models to database to create tables/relations
 
 // app.use((req, res, next) => {
 //     console.log('In middleware!');
