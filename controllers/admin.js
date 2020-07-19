@@ -20,12 +20,13 @@ exports.postAddProduct = (req, res, next) => { //app.post only works for post re
     const imageUrl = req.body.imageUrl;
     const description = req.body.description;
     const price = req.body.price;
-    Product.create({
+    req.user.createProduct({
         title: title,
         description: description,
         price: price,
-        imageUrl: imageUrl
-    }).then(result => {
+        imageUrl: imageUrl,
+    })
+    .then(result => {
         // console.log(result);
         res.redirect('/admin/products');
     })
@@ -46,7 +47,8 @@ exports.getEditProduct = (req, res, next) => {
 
     const prodId = req.params.productId;
 
-    Product.findByPk(prodId).then(product => {
+    Product.findByPk(prodId)
+    .then(product => {
         if(!product){
             return res.redirect('/');
         }
@@ -103,7 +105,9 @@ exports.postDeleteProduct = (req, res, next ) => {
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll().then(products => {
+    req.user.getProducts()
+    // Product.findAll()
+    .then(products => {
         res.render('admin/products', {
             prods: products, 
             pageTitle: 'Admin Products', 
