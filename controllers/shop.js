@@ -1,7 +1,7 @@
 const Product = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll().then(products => {
+    Product.fetchAll().then(products => {
         res.render('shop/product-list', {
             prods: products,
             pageTitle: 'Shop', 
@@ -15,18 +15,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const productId = req.params.productId;
-    // ALT using FindAll w/ where query vs findByPk
-    // Product.findAll({where: {id: productId}}).then(proudcts => {
-    //     res.render('shop/product-detail', {
-    //         product: products[0],
-    //         pageTitle: products[0].title,
-    //         path: '/products'
-    //     });
-    // })
-    // .then(err => {
-    //     console.log(err);
-    // });
-    Product.findByPk(productId)
+    Product.findById(productId)
     .then(product => {
         res.render('shop/product-detail', {
             product: product,
@@ -38,7 +27,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-    Product.findAll().then(products => {
+    Product.fetchAll().then(products => {
         res.render('shop/index', {
             prods: products,
             pageTitle: 'Shop', 
