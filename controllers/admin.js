@@ -10,7 +10,8 @@ exports.getAddProduct = (req, res, next) => {
         activeAddProduct: true, 
         editing: false,
         formsCSS: true,
-        productCSS: true
+        productCSS: true,
+        isAuthenticated: req.isLoggedIn
     });
 }
 
@@ -56,7 +57,8 @@ exports.getEditProduct = (req, res, next) => {
             editing: editMode,
             product: product,
             formsCSS: true,
-            productCSS: true
+            productCSS: true,
+            isAuthenticated: req.isLoggedIn
         });
     })
     .catch(err => {
@@ -107,7 +109,8 @@ exports.getProducts = (req, res, next) => {
             pageTitle: 'Admin Products', 
             path: 'admin/products', 
             hasProducts: products.length > 0, 
-            activeShop: true
+            activeShop: true,
+            isAuthenticated: req.isLoggedIn
         });
     })
     .catch(err => {

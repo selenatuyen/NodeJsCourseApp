@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require('express-session');
 // const expressHandlebars = require('express-handlebars');
 
 const errorController = require('./controllers/error');
@@ -22,9 +23,14 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const authRoutes = require('./routes/auth');
+
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+    session({secret: 'my secret', resave: false, saveUninitialized: false})
+);
 
 app.use((req, res, next) =>{
     User.findById('5f1e039d4e0c0813d4a2e1c8')
@@ -37,7 +43,7 @@ app.use((req, res, next) =>{
 
 app.use('/admin', adminRoutes); // '/admin' is an added filter to go to /admin/add-product
 app.use(shopRoutes);
-
+app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose.connect('mongodb+srv://selena:12345@cluster0.8q2aa.mongodb.net/shop?retryWrites=true&w=majority')
