@@ -235,19 +235,18 @@ form {
 .user-message {
   margin: auto;
   width: 90%;
-  border: 1px solid rgb(20, 20, 73);
+  border: 1px solid #4771fa;
   padding: 0.5rem;
   border-radius: 3px;
-  background: rgb(117, 117, 161);
+  background: #b9c9ff;
   text-align: center;
 }
 
-.user-message--error{
-  border: rgb(63, 14, 14);
-  background: rgb(160, 69, 69);
+.user-message--error {
+  border-color: red;
+  background: rgb(255, 176, 176);
   color: red;
 }
-
 
 @media (min-width: 768px) {
   .main-header__nav {
@@ -258,7 +257,7 @@ form {
     display: none;
   }
 
-  .user-message{
+  .user-message {
     width: 30rem;
   }
 }
